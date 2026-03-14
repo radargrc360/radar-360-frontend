@@ -15,6 +15,7 @@ interface RiskCardProps {
   categoria_risco_fk_id: number;
   score: string;
   updatedAt: Date;
+  type: "grid" | "list";
 }
 
 export default function RiskCard({

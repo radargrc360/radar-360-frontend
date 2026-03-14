@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/table";
 
 import { Checkbox } from "@/components/ui/checkbox";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -29,26 +30,26 @@ import {
 import { MoreHorizontal } from "lucide-react";
 import { useState } from "react";
 import Image from "next/image";
-import api from "@/src/app/api/config";
 
-export interface Users {
-  id: string;
-  nome: string;
-  email: string;
-  funcao: string;
-  estado: "Activo" | "Bloqueado" | "Pendente";
-  ultimoAcesso: string;
+export interface Risk {
+  riscos_id: number;
+  codigo_risco: string;
+  titulo: string;
+  descricao_risco: string;
+  score: string;
+  status_riscos: string;
+  responsavel: string;
+  departamento_organizacional_id: number;
 }
 
-interface UsersTableProps {
-  data: Users[];
-  onDelete: (id: string) => void;
+interface RisksTableProps {
+  data: Risk[];
 }
 
-export function UsersTable({ data, onDelete }: UsersTableProps) {
+export function RisksTable({ data }: RisksTableProps) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
-  const columns: ColumnDef<Users>[] = [
+  const columns: ColumnDef<Risk>[] = [
     {
       id: "select",
       header: ({ table }) => (
@@ -70,63 +71,115 @@ export function UsersTable({ data, onDelete }: UsersTableProps) {
       ),
       size: 20,
     },
+
     {
-      accessorKey: "nome",
+      accessorKey: "codigo_risco",
+      header: "ID",
+    },
+
+    {
+      accessorKey: "titulo",
       header: "Nome",
       cell: ({ row }) => (
         <div className="font-medium flex items-center gap-2 text-dark">
           <Image
-            src={"/user.png"}
-            alt={"User Profile"}
+            src="/user.png"
+            alt="Risk"
             width={1920}
             height={1080}
             className="rounded-full w-12 h-12"
-          />{" "}
-          {row.original.nome}
+          />
+          {row.original.titulo}
         </div>
       ),
     },
+
     {
-      accessorKey: "email",
-      header: "E-mail",
+      accessorKey: "descricao_risco",
+      header: "Descrição",
+      cell: ({ row }) => (
+        <p className="max-w-sm text-gray-500 line-clamp-2">
+          {row.original.descricao_risco}
+        </p>
+      ),
     },
+
     {
-      accessorKey: "funcao",
-      header: "Função",
+      accessorKey: "responsavel",
+      header: "Responsável",
+      cell: ({ row }) => (
+        <div className="flex items-center gap-2">
+          <Image
+            src="/user.png"
+            alt="User"
+            width={1920}
+            height={1080}
+            className="rounded-full w-10 h-10"
+          />
+          {row.original.responsavel}
+        </div>
+      ),
     },
+
     {
-      accessorKey: "estado",
-      header: "Estado",
+      accessorKey: "departamento_organizacional_id",
+      header: "Unidade Organizacional",
+      cell: ({ row }) => (
+        <span className="text-gray-500">
+          {row.original.departamento_organizacional_id}
+        </span>
+      ),
+    },
+
+    {
+      accessorKey: "score",
+      header: "Score",
       cell: ({ row }) => (
         <div
-          className={` ${
-            row.original.estado === "Activo" &&
-            "border border-green-600 bg-green-500/20 text-green-700 px-2 rounded-full flex w-fit items-center justify-center"
-          }`}>
-          <p>{row.original.estado}</p>
+          className={`px-2 rounded-full w-fit flex items-center justify-center text-sm
+          ${
+            row.original.score === "Crítico"
+              ? "border border-red-600 bg-red-500/20 text-red-700"
+              : row.original.score === "Alto"
+              ? "border border-orange-600 bg-orange-500/20 text-orange-700"
+              : row.original.score === "Médio"
+              ? "border border-yellow-600 bg-yellow-500/20 text-yellow-700"
+              : "border border-green-600 bg-green-500/20 text-green-700"
+          }`}
+        >
+          {row.original.score}
         </div>
       ),
     },
+
     {
-      accessorKey: "ultimoAcesso",
-      header: "Último Acesso",
+      accessorKey: "status_riscos",
+      header: "Estado",
+      cell: ({ row }) => (
+        <div className="border border-orange-600 bg-orange-500/20 text-orange-700 px-2 rounded-full flex w-fit items-center justify-center">
+          {row.original.status_riscos}
+        </div>
+      ),
     },
+
     {
       id: "actions",
       cell: ({ row }) => (
         <DropdownMenu>
-          <DropdownMenuTrigger className="p-2 rounded hover:bg-gray-100 ">
+          <DropdownMenuTrigger className="p-2 rounded hover:bg-gray-100">
             <MoreHorizontal className="h-4 w-4" />
           </DropdownMenuTrigger>
+
           <DropdownMenuContent align="end">
             <DropdownMenuItem onClick={() => console.log("Ver", row.original)}>
               Ver
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={() => console.log("Baixar", row.original)}>
-              Baixar
+
+            <DropdownMenuItem onClick={() => console.log("Editar", row.original)}>
+              Editar
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => onDelete(row.original.id)}>
+
+            <DropdownMenuItem onClick={() => console.log("Eliminar", row.original)}>
               Remover
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -158,11 +211,13 @@ export function UsersTable({ data, onDelete }: UsersTableProps) {
                     header.column.getCanSort()
                       ? "cursor-pointer select-none text-gray-400"
                       : ""
-                  }>
+                  }
+                >
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext(),
                   )}
+
                   {header.column.getIsSorted() === "asc" && " ↑"}
                   {header.column.getIsSorted() === "desc" && " ↓"}
                 </TableHead>
@@ -184,10 +239,8 @@ export function UsersTable({ data, onDelete }: UsersTableProps) {
             ))
           ) : (
             <TableRow>
-              <TableCell
-                colSpan={columns.length}
-                className="text-center py-10">
-                Nenhuma evidência encontrada.
+              <TableCell colSpan={columns.length} className="text-center py-10">
+                Nenhum risco encontrado.
               </TableCell>
             </TableRow>
           )}

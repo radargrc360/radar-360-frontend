@@ -24,6 +24,7 @@ import { useRiscosByCliente } from "@/src/app/hooks/useGetClientRisks";
 import useGetClientData from "@/src/app/hooks/useGetClientData";
 import RiskCard from "./components/RiskCard";
 import { toast, ToastContainer } from "react-toastify";
+import { RisksTable } from "./components/RisksTable";
 
 type StepOneData = {
   titulo: string;
@@ -154,6 +155,28 @@ export default function RiskRegister() {
   const [openStepTwo, setStepTwoOpen] = useState(false);
   const [openStepThree, setStepThreeOpen] = useState(false);
 
+  const [search, setSearch] = useState("");
+  const [severityFilter, setSeverityFilter] = useState("");
+  const [statusFilter, setStatusFilter] = useState("");
+  const [viewType, setViewType] = useState<"grid" | "list">("grid");
+
+  const filteredRisks = riscos.filter((risk) => {
+    const matchesSearch =
+      risk.titulo.toLowerCase().includes(search.toLowerCase()) ||
+      risk.codigo_risco.toLowerCase().includes(search.toLowerCase()) ||
+      risk.responsavel.toLowerCase().includes(search.toLowerCase());
+
+    const matchesSeverity = severityFilter
+      ? risk.score === severityFilter
+      : true;
+
+    const matchesStatus = statusFilter
+      ? risk.status_riscos === statusFilter
+      : true;
+
+    return matchesSearch && matchesSeverity && matchesStatus;
+  });
+
   const handleSubmit = async (data: RiskRegisterData) => {
     try {
       const payload = mapRiskRegisterToPayload(data, clientData);
@@ -226,31 +249,55 @@ export default function RiskRegister() {
             <input
               type="search"
               className="outline-none w-full"
-              placeholder="Pesquisar por nome, ID ou responsável... "
+              placeholder="Pesquisar por nome, ID ou responsável..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
           </div>
 
           <ul className="text-gray-500 flex gap-3">
             <li>
-              <button className="border border-gray-300 rounded-lg p-2">
+              <button
+                className={`border rounded-lg p-2 ${
+                  viewType === "list" ? "bg-gray-200" : "border-gray-300"
+                }`}
+                onClick={() => setViewType("list")}>
                 <Menu />
               </button>
             </li>
             <li>
-              <button className="border border-gray-300 rounded-lg p-2">
+              <button
+                className={`border rounded-lg p-2 ${
+                  viewType === "grid" ? "bg-gray-200" : "border-gray-300"
+                }`}
+                onClick={() => setViewType("grid")}>
                 <LayoutGrid />
               </button>
             </li>
 
             <li className="border border-gray-300 rounded-lg p-2 w-32">
-              <select className="outline-none w-full">
-                <option value="Gravidade">Gravidade</option>
+              <select
+                className="outline-none w-full"
+                value={severityFilter}
+                onChange={(e) => setSeverityFilter(e.target.value)}>
+                <option value="">Gravidade</option>
+                <option value="Crítico">Crítico</option>
+                <option value="Alto">Alto</option>
+                <option value="Médio">Médio</option>
+                <option value="Baixo">Baixo</option>
               </select>
             </li>
 
             <li className="border border-gray-300 rounded-lg p-2 w-24">
-              <select className="outline-none w-full">
-                <option value="Estado">Estado</option>
+              <select
+                className="outline-none w-full"
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}>
+                <option value="">Estado</option>
+                <option value="Identificado">Identificado</option>
+                <option value="Em Avaliação">Em Avaliação</option>
+                <option value="Em Execução">Em Execução</option>
+                <option value="Mitigado">Mitigado</option>
               </select>
             </li>
           </ul>
@@ -263,45 +310,31 @@ export default function RiskRegister() {
             <p className="text-red-500">Erro ao carregar riscos: {error}</p>
           ) : null}
 
-          {riscos.length > 0 && loading === false ? (
-            <div className="w-full h-full grid grid-cols-3 gap-4">
-              {" "}
-              {/* */}
-              {riscos.map((risco) => (
-                <RiskCard
-                  key={risco.riscos_id}
-                  id={risco.riscos_id}
-                  titulo={risco.titulo}
-                  status_riscos={risco.status_riscos}
-                  riskId={risco.codigo_risco}
-                  responsavel={risco.responsavel}
-                  responsibleImage="/user.png"
-                  unit={risco.departamento_organizacional_id.toString()}
-                  categoria_risco_fk_id={risco.categoria_risco_fk_id}
-                  score={risco.score}
-                  updatedAt={new Date(risco.risco_update)}
-                />
-              ))}
-            </div>
+          {filteredRisks.length > 0 && loading === false ? (
+            viewType === "grid" ? (
+              <div className="w-full h-full grid grid-cols-3 gap-4">
+                {filteredRisks.map((risco) => (
+                  <RiskCard
+                    key={risco.riscos_id}
+                    id={risco.riscos_id}
+                    titulo={risco.titulo}
+                    status_riscos={risco.status_riscos}
+                    riskId={risco.codigo_risco}
+                    responsavel={risco.responsavel}
+                    responsibleImage="/user.png"
+                    unit={risco.departamento_organizacional_id.toString()}
+                    categoria_risco_fk_id={risco.categoria_risco_fk_id}
+                    score={risco.score}
+                    updatedAt={new Date(risco.risco_update)}
+                    type={"grid"}
+                  />
+                ))}
+              </div>
+            ) : (
+              <RisksTable data={filteredRisks} />
+            )
           ) : (
-            <div className="flex flex-col gap-4 items-center max-w-sm">
-              <span className="text-center flex flex-col items-center">
-                <h1 className="text-xl text-primary font-semibold">
-                  Nenhum risco encontrado
-                </h1>
-
-                <p className="text-gray-400 text-base">
-                  Ainda não existem riscos cadastrados no registro. Comece por
-                  criar risco.
-                </p>
-              </span>
-
-              <button
-                className="primary-btn gap-1 w-fit"
-                onClick={() => setStepOneOpen(true)}>
-                <Plus size={18} /> Registar Novos Riscos
-              </button>
-            </div>
+            <p className="text-gray-500">Nenhum risco encontrado.</p>
           )}
         </div>
       </div>

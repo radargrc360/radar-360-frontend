@@ -66,17 +66,26 @@ export default function Users() {
   const [selectedEstado, setSelectedEstado] = useState("all");
 
   const filteredUsers = useMemo(() => {
+    const searchTerm = search.trim().toLowerCase();
+
     return usersState.filter((user) => {
+      const nome = user.nome.toLowerCase();
+      const email = user.email.toLowerCase();
+      const id = user.id.toLowerCase();
+      const funcao = user.funcao.toLowerCase();
+      const estado = user.estado.toLowerCase();
+
       const searchMatch =
-        user.nome.toLowerCase().includes(search.toLowerCase()) ||
-        user.email.toLowerCase().includes(search.toLowerCase()) ||
-        user.id.includes(search);
+        searchTerm === "" ||
+        nome.includes(searchTerm) ||
+        email.includes(searchTerm) ||
+        id.includes(searchTerm);
 
       const funcaoMatch =
-        selectedFuncao === "all" || user.funcao === selectedFuncao;
+        selectedFuncao === "all" || funcao === selectedFuncao.toLowerCase();
 
       const estadoMatch =
-        selectedEstado === "all" || user.estado === selectedEstado;
+        selectedEstado === "all" || estado === selectedEstado.toLowerCase();
 
       return searchMatch && funcaoMatch && estadoMatch;
     });
@@ -138,7 +147,7 @@ export default function Users() {
           </p>
         </div>
 
-        <ul className="flex flex-wrap w-full gap-4">
+        <ul className="grid grid-cols-3 w-full gap-4">
           {usersDash.map((item, id) => (
             <li
               key={id}
@@ -180,7 +189,7 @@ export default function Users() {
                   {funcoes.map((funcao) => (
                     <option
                       key={funcao}
-                      value={funcao}>
+                      value={funcao.toLowerCase()}>
                       {funcao}
                     </option>
                   ))}
@@ -192,9 +201,9 @@ export default function Users() {
                   value={selectedEstado}
                   onChange={(e) => setSelectedEstado(e.target.value)}>
                   <option value="all">Estado</option>
-                  <option value="Activo">Activo</option>
-                  <option value="Bloqueado">Bloqueado</option>
-                  <option value="Pendente">Pendente</option>
+                  <option value="activo">Activo</option>
+                  <option value="bloqueado">Bloqueado</option>
+                  <option value="pendente">Pendente</option>
                 </select>
               </li>
               <li>
