@@ -232,8 +232,8 @@ export default function ConfiguracaoOrganizacional() {
                 {categorias.map((categoria) => (
                   <li
                     key={categoria.id_lista_de_categoria_de_risco}
-                    className="cursor-pointer w-full ">
-                    <label className="flex flex-col p-6 rounded-md border h-64 border-gray-200 gap-4">
+                    className="cursor-pointer w-full h-full min-h-64 ">
+                    <label className="flex flex-col p-6 rounded-md border h-full border-gray-200 gap-4">
                       <div className="flex justify-between w-full">
                         <div className="flex flex-col">
                           <p className="text-sm text-gray-500">

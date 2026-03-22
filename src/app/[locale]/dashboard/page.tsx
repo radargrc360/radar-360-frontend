@@ -25,13 +25,13 @@ export default function HomePage() {
   const { riscos } = useRiscosByCliente(clientData?.mensagem.id_clientes);
 
   const riscosAtivos = riscos.filter((r) =>
-    ["Identificado", "Em Tratamento"].includes(r.status_riscos)
+    ["Identificado", "Em Tratamento"].includes(r.status_riscos),
   );
 
   const riscosCriticos = riscos.filter((r) => r.score === "Alto");
 
   const riscosDentroApetite = riscos.filter(
-    (r) => r.score === "Baixo" || r.score === "Médio"
+    (r) => r.score === "Baixo" || r.score === "Médio",
   );
 
   const apetitePercentual = riscos.length
@@ -49,7 +49,7 @@ export default function HomePage() {
   trintaDiasAtras.setDate(hoje.getDate() - 30);
 
   const avaliacoesRecentes = riscos.filter(
-    (r) => new Date(r.risco_update) >= trintaDiasAtras
+    (r) => new Date(r.risco_update) >= trintaDiasAtras,
   ).length;
 
   const dashcardInfo: DashcardProps[] = [
@@ -162,14 +162,58 @@ export default function HomePage() {
         ))}
       </div>
 
-      <div className="w-full flex gap-5">
+      <div className="w-full gap-5 grid grid-cols-2">
         <RiskMatrix />
         <CriticalAlerts />
-      </div>
-
-      <div className="w-full flex gap-5">
+  
         <MainRisks />
         <RecentsActivities />
+      </div>
+
+      <div className="flex flex-col gap-4 text-dark">
+        <h2 className="text-lg font-semibold text-dark">Estado do Módulo</h2>
+
+        <ul className="w-full grid grid-cols-4 gap-5 h-32">
+          <li className="flex flex-col gap-2 bg-[#F9FBFC] border border-[#EAECF0] rounded-2xl p-6 shadow-md shadow-dark/8">
+            <h1 className="text-[#6B7280]">Governança e Taxonomia</h1>
+            <span className="bg-[#EEF7FF] px-2 border border-[#89CDFF] rounded-full text-sm text-primary-100 w-fit">
+              Configuração completa
+            </span>
+          </li>
+
+          <li className="flex flex-col  bg-[#F9FBFC] border border-[#EAECF0] rounded-2xl p-6 shadow-md shadow-dark/8">
+            <h1 className="text-[#6B7280]">Registro de Riscos</h1>
+            <p className="text-2xl font-semibold">{riscos.length}</p>
+            <p className="text-xs text-gray-500">Riscos Ativos</p>
+          </li>
+
+          <li className="flex flex-col  bg-[#F9FBFC] border border-[#EAECF0] rounded-2xl p-6 shadow-md shadow-dark/8">
+            <h1 className="text-[#6B7280]">BRE</h1>
+            <p className="text-2xl font-semibold">
+              {resiliencia}%{" "}
+              {resiliencia >= 70 ? (
+                <span className="bg-[#F0FDF5] px-2 border border-green-400 rounded-full text-sm text-green-400 w-fit">
+                  Bom
+                </span>
+              ) : (
+                "Fora da Tolerância"
+              )}
+            </p>
+            <p className="text-xs text-gray-500">Avalie o preparo da empresa</p>
+          </li>
+
+          <li className="flex flex-col gap-2 bg-[#F9FBFC] border border-[#EAECF0] rounded-2xl p-6 shadow-md shadow-dark/8">
+            <h1 className="text-[#6B7280]">Apetite ao Risco</h1>
+            {apetitePercentual >= 70 ? (
+              <span className="bg-green-200 text-green-800 px-2 rounded-lg w-fit text-sm font-medium">
+                {" "}
+                Dentro da Tolerância{" "}
+              </span>
+            ) : (
+              "Fora da Tolerância"
+            )}
+          </li>
+        </ul>
       </div>
     </div>
   );

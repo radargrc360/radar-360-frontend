@@ -14,7 +14,7 @@ import { useGetEscalasMatriz } from "@/src/app/hooks/useGetMatrizEscala";
 export default function TaxonomySetup() {
   const [activeTab, setActiveTab] = useState("taxonomia");
   const [selectedCategorias, setSelectedCategorias] = useState<number[]>([]);
-    const { refetch } = useGetEscalasMatriz()
+  const { refetch } = useGetEscalasMatriz();
 
   const [step] = useState(4);
 
@@ -40,7 +40,7 @@ export default function TaxonomySetup() {
 
   function toggleCategoria(id: number) {
     setSelectedCategorias((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
+      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id],
     );
   }
 
@@ -60,7 +60,7 @@ export default function TaxonomySetup() {
 
       if (response.status === 201) {
         toast.success("Categorias de risco salvas com sucesso");
-        refetch()
+        refetch();
         router.push("/dashboard/setup/matrix");
       }
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -110,8 +110,8 @@ export default function TaxonomySetup() {
                   {categorias.map((categoria) => (
                     <li
                       key={categoria.id_lista_de_categoria_de_risco}
-                      className="cursor-pointer max-w-xl w-full ">
-                      <label className="flex flex-col p-6 rounded-md border h-62 border-gray-200 gap-4">
+                      className="cursor-pointer w-full h-full min-h-64">
+                      <label className="flex flex-col p-6 rounded-md border h-full border-gray-200 gap-4">
                         <div className="flex justify-between w-full">
                           <div className="flex flex-col">
                             <p className="text-sm text-gray-500">
@@ -126,11 +126,11 @@ export default function TaxonomySetup() {
                             type="checkbox"
                             className="border border-gray-100 w-5 h-5"
                             checked={selectedCategorias.includes(
-                              categoria.id_lista_de_categoria_de_risco
+                              categoria.id_lista_de_categoria_de_risco,
                             )}
                             onChange={() =>
                               toggleCategoria(
-                                categoria.id_lista_de_categoria_de_risco
+                                categoria.id_lista_de_categoria_de_risco,
                               )
                             }
                           />

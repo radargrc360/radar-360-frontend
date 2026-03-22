@@ -12,7 +12,7 @@ export default function RiskMatrix() {
   };
 
   return (
-    <div className="border border-gray-200 rounded-2xl p-6 w-full shadow-md shadow-dark/8 min-h-96">
+    <div className="border border-gray-200 rounded-2xl p-6 w-full shadow-md shadow-dark/8">
       <div>
         <h2 className="text-lg font-semibold text-dark">Matriz de Risco</h2>
         <p className="text-gray-500 text-sm mt-1">

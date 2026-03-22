@@ -14,7 +14,7 @@ const SCORE_ORDER: Record<string, number> = {
 export default function MainRisks() {
   const { clientData } = useGetClientData();
   const { riscos, loading } = useRiscosByCliente(
-    clientData?.mensagem.id_clientes
+    clientData?.mensagem.id_clientes,
   );
 
   const principaisRiscos = [...riscos]
@@ -43,11 +43,13 @@ export default function MainRisks() {
           </p>
         </div>
 
-        <Link
-          href={"/dashboard/risk-register"}
-          className="flex font-medium text-primary-100 text-sm gap-2 w-60 justify-between hover:bg-primary-100/10 px-3 py-2 rounded-lg transition-all duration-300 cursor-pointer items-center">
-          Explorar todos <ArrowRight className="w-5 h-5" />
-        </Link>
+        {principaisRiscos.length > 4 && (
+          <Link
+            href={"/dashboard/risk-register"}
+            className="flex font-medium text-primary-100 text-sm gap-2 w-60 justify-between hover:bg-primary-100/10 px-3 py-2 rounded-lg transition-all duration-300 cursor-pointer items-center">
+            Explorar todos <ArrowRight className="w-5 h-5" />
+          </Link>
+        )}
       </div>
 
       <ul className="w-full h-full overflow-y-auto">
@@ -58,12 +60,18 @@ export default function MainRisks() {
         )}
 
         {!loading && principaisRiscos.length === 0 && (
-          <li className="text-sm text-gray-400 px-4 py-3">
-            Nenhum risco registado.
+          <li className="w-full flex flex-col items-center justify-center my-auto h-full">
+            <h1 className="text-lg text-dark font-semibold">
+              Nenhum risco cadastrado.
+            </h1>
+            <p className="text-gray-500 ">
+              Crie o primeiro risco para começar a visualizar tendências e
+              níveis de criticidade.
+            </p>
           </li>
         )}
 
-        {principaisRiscos.map((risco) => (
+        {principaisRiscos.slice(0, 4).map((risco) => (
           <li key={risco.riscos_id}>
             <Link
               href={`/dashboard/risk-register/${risco.riscos_id}`}
@@ -81,8 +89,8 @@ export default function MainRisks() {
                       risco.score === "Alto"
                         ? "bg-red-50 border-red-400 text-red-600"
                         : risco.score === "Médio"
-                        ? "bg-yellow-50 border-yellow-400 text-yellow-600"
-                        : "bg-green-50 border-green-400 text-green-600"
+                          ? "bg-yellow-50 border-yellow-400 text-yellow-600"
+                          : "bg-green-50 border-green-400 text-green-600"
                     }`}>
                     {risco.score}
                   </span>

@@ -1,6 +1,6 @@
-import { Link } from "@/src/i18n/navigation";
+/* import { Link } from "@/src/i18n/navigation";
 import { ArrowRight } from "lucide-react";
-
+ */
 export default function CriticalAlerts() {
   return (
     <div className="border border-gray-200 rounded-2xl p-6 w-full shadow-md shadow-dark/8 min-h-96">
@@ -12,11 +12,18 @@ export default function CriticalAlerts() {
           </p>
         </div>
 
-        <Link
+        {/*  <Link
           href={"#"}
           className="flex font-medium text-primary-100 text-sm gap-2">
           Ver mais <ArrowRight className="w-5 h-5"/>
-        </Link>
+        </Link> */}
+      </div>
+
+      <div className="w-full flex flex-col items-center justify-center my-auto h-full">
+        <h1 className="text-lg text-dark font-semibold">
+          Nenhum alerta detectado.
+        </h1>
+        <p className="text-gray-500 ">Os alertas de maior prioridade serão exibidos automaticamente quando forem identificados.</p>
       </div>
     </div>
   );
