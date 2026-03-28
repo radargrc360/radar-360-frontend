@@ -144,8 +144,6 @@ export default function HomePage() {
               <Settings size={18} /> Iniciar configuração
             </Link>
           )}
-
-          {/* */}
         </div>
       </div>
 
@@ -165,7 +163,6 @@ export default function HomePage() {
       <div className="w-full gap-5 grid grid-cols-2">
         <RiskMatrix />
         <CriticalAlerts />
-  
         <MainRisks />
         <RecentsActivities />
       </div>
