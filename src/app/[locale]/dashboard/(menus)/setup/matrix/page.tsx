@@ -40,7 +40,7 @@ export default function TaxonomySetup() {
       setSubmitting(true);
 
       const response = await api.patch(
-        `/clientes/${clientData?.mensagem.id_clientes}/redifinir-escala-matriz`,
+        `/customers/${clientData?.message.id_clientes}/redifinir-escala-matriz`,
         {
           cliente_matriz_escala_id: String(selectedEscalaId),
         },

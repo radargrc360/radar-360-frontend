@@ -55,14 +55,14 @@ export default function OrganizacionalSetup() {
   const { industrias } = useGetIndustriasPrincipais();
   const { jurisdicoes } = useGetJurisdicaoActivaComFrameworks();
   const { refetch } = useGetClientFrameworksTodos({
-    clientId: clientData?.mensagem.id_clientes,
+    clientId: clientData?.message.id_clientes,
   });
   const {
     jurisdicoes: jurisdicoesPorId,
     loading,
     error,
   } = useGetJurisdicaoPorId({
-    jurisdicaoId: clientData?.mensagem.cliente_jurisdicao_id || 0,
+    jurisdicaoId: clientData?.message.cliente_jurisdicao_id || 0,
     enabled: step === 3,
   });
 
@@ -70,12 +70,12 @@ export default function OrganizacionalSetup() {
     jurisdicoesPorId?.flatMap((jurisdicao) => jurisdicao.frameworks) || [];
 
   useEffect(() => {
-    if (clientData?.mensagem?.cliente_industria_id) {
-      setSelectedIndustria(clientData.mensagem.cliente_industria_id);
+    if (clientData?.message?.cliente_industria_id) {
+      setSelectedIndustria(clientData.message.cliente_industria_id);
     }
 
-    if (clientData?.mensagem?.cliente_jurisdicao_id) {
-      setSelectedJurisdicao(clientData.mensagem.cliente_jurisdicao_id);
+    if (clientData?.message?.cliente_jurisdicao_id) {
+      setSelectedJurisdicao(clientData.message.cliente_jurisdicao_id);
     }
   }, [clientData]);
 
@@ -90,7 +90,7 @@ export default function OrganizacionalSetup() {
     try {
       setLoadingBtn(true);
       const response = await api.patch(
-        `/clientes/${clientData?.mensagem.id_clientes}/redifinir-industria`,
+        `/customers/${clientData?.message.id_clientes}/redifinir-industria`,
         {
           cliente_industria_id: selectedIndustria?.toString(),
         },
@@ -126,7 +126,7 @@ export default function OrganizacionalSetup() {
     try {
       setLoadingBtn(true);
       const response = await api.patch(
-        `/clientes/${clientData?.mensagem.id_clientes}/redifinir-jurisdicao`,
+        `/customers/${clientData?.message.id_clientes}/redifinir-jurisdicao`,
         {
           cliente_jurisdicao_id: selectedJurisdicao?.toString(),
         },
@@ -159,7 +159,7 @@ export default function OrganizacionalSetup() {
       return;
     }
 
-    if (!clientData?.mensagem?.id_clientes) {
+    if (!clientData?.message?.id_clientes) {
       toast.error("Cliente não identificado.");
       return;
     }
@@ -169,7 +169,7 @@ export default function OrganizacionalSetup() {
 
       const response = await api.post("/frameworks/escolher", {
         frameworks_id_fk: selectedFrameworks,
-        clientes_id_fk: clientData.mensagem.id_clientes,
+        clientes_id_fk: clientData.message.id_clientes,
       });
 
       if (response.status === 201) {

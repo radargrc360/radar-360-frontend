@@ -19,7 +19,7 @@ export default function ResumeModal({ open, onClose, title }: ModalProps) {
   const { clientData } = useGetClientData();
 
   const { frameworks, industria, jurisdicao, cliente } =
-    useGetClienteComFrameworks(clientData?.mensagem.id_clientes);
+    useGetClienteComFrameworks(clientData?.message.id_clientes);
 
   const handleClick = () => {
     router.push("/dashboard/setup/taxonomy");

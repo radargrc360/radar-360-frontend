@@ -59,7 +59,7 @@ export default function ResetPasswordPage() {
     setLoading(true);
     try {
       const response = await api.patch(
-        `/clientes/${entidade}/redifinir-senha`,
+        `/customers/${entidade}/redifinir-senha`,
         {
           senha: data.newPassword,
           confirmar_senha: data.confirmPassword,

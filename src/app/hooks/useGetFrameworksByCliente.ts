@@ -23,7 +23,7 @@ export function useGetFrameworksByCliente(clientId?: number) {
         setError(null);
 
         const response = await api.get<ApiResponse>(
-          `/frameworks/cliente/${clientId}`
+          `/frameworks/clientes/${clientId}`,
         );
 
         setFrameworks(response.data.mensagem || []);

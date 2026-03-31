@@ -23,5 +23,5 @@ export type UsersByClientResponse = {
   status: "sucesso" | "erro";
   statusCode: number;
   formato: "json";
-  mensagem: ClientUser[];
+  message: ClientUser[];
 };

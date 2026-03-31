@@ -65,7 +65,7 @@ export default function CreateRiskRegisterTwo({
   const selectedCategoryId = watch("categoria_risco_fk_id");
 
   const { categorias: categories, loading } = useGetCategoriaRiscoByClientId({
-    idCliente: clientData?.mensagem.id_clientes,
+    idCliente: clientData?.message.id_clientes,
   });
 
   const { data, loading: subCategoriesLoading } = useRiskSubCategories({
@@ -73,7 +73,7 @@ export default function CreateRiskRegisterTwo({
   });
 
   const { departamentos } = useGetDepartamentosCliente(
-    clientData?.mensagem.id_clientes,
+    clientData?.message.id_clientes,
   );
 
   useEffect(() => {

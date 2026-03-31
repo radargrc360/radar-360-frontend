@@ -25,7 +25,7 @@ type FormData = {
 
 export default function AddUserModal({ open, onClose }: ModalProps) {
   const { clientData } = useGetClientData();
-  const { roles } = useUserRolesByClient(clientData?.mensagem.id_clientes);
+  const { roles } = useUserRolesByClient(clientData?.message.id_clientes);
   const [loading, setLoading] = useState<boolean>(false);
 
   const {
@@ -41,7 +41,7 @@ export default function AddUserModal({ open, onClose }: ModalProps) {
     try {
       setLoading(true);
 
-      const empresaId = clientData?.mensagem.id_clientes;
+      const empresaId = clientData?.message.id_clientes;
 
       const payload = {
         email_: data.email,

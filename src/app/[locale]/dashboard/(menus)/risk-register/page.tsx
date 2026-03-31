@@ -83,7 +83,7 @@ function mapRiskRegisterToPayload(
   }
 
   return {
-    empresa_id: clientData!.mensagem.id_clientes,
+    empresa_id: clientData!.message.id_clientes,
     titulo: data.stepOne.titulo,
     descricao_risco: data.stepOne.descricao_risco,
 
@@ -119,7 +119,7 @@ export default function RiskRegister() {
   const { clientData } = useGetClientData();
 
   const { error, loading, riscos } = useRiscosByCliente(
-    clientData?.mensagem.id_clientes,
+    clientData?.message.id_clientes,
   );
 
   const riskDash = [

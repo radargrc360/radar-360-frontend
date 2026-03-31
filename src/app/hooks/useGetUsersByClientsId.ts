@@ -21,18 +21,18 @@ export function useUsersByClient(clientId?: number) {
         setError(null);
 
         const response = await api.get<UsersByClientResponse>(
-          `/usuarios/cliente/${clientId}`
+          `/usuarios/cliente/${clientId}`,
         );
 
         if (!isMounted) return;
 
-        setUsers(response.data.mensagem);
+        setUsers(response.data.message);
       } catch (err: any) {
         if (!isMounted) return;
 
         setError(
           err?.response?.data?.mensagem ||
-            "Erro ao carregar usuários do cliente"
+            "Erro ao carregar usuários do cliente",
         );
       } finally {
         if (isMounted) setLoading(false);

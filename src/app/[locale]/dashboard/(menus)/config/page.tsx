@@ -48,7 +48,7 @@ export default function ConfiguracaoOrganizacional() {
 
   const { clientData } = useGetClientData();
   const { escalaMatriz } = useGetClienteComFrameworks(
-    clientData?.mensagem.id_clientes,
+    clientData?.message.id_clientes,
   );
   const [selectedEscalaId, setSelectedEscalaId] = useState<number | null>(null);
 
@@ -68,7 +68,7 @@ export default function ConfiguracaoOrganizacional() {
 
     try {
       const response = await api.patch(
-        `/clientes/${clientData?.mensagem.id_clientes}/redifinir-industria`,
+        `/customers/${clientData?.message.id_clientes}/redifinir-industria`,
         {
           cliente_industria_id: selectedIndustria.toString(),
         },
@@ -94,7 +94,7 @@ export default function ConfiguracaoOrganizacional() {
 
     try {
       const response = await api.patch(
-        `/clientes/${clientData?.mensagem.id_clientes}/redifinir-jurisdicao`,
+        `/customers/${clientData?.message.id_clientes}/redefine-jurisdiction`,
         {
           cliente_jurisdicao_id: selectedJurisdicao?.toString(),
         },
@@ -123,7 +123,7 @@ export default function ConfiguracaoOrganizacional() {
       setSubmitting(true);
 
       const response = await api.patch(
-        `/clientes/${clientData?.mensagem.id_clientes}/redifinir-escala-matriz`,
+        `/customers/${clientData?.message.id_clientes}/redifinir-escala-matriz`,
         {
           cliente_matriz_escala_id: String(escalaId),
         },
@@ -148,7 +148,7 @@ export default function ConfiguracaoOrganizacional() {
   };
 
   const { categorias } = useGetCategoriaRiscoByClientId({
-    idCliente: clientData?.mensagem.id_clientes,
+    idCliente: clientData?.message.id_clientes,
   });
 
   const { escalas } = useGetEscalasMatriz();

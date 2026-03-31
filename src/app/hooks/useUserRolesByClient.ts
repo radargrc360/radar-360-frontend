@@ -21,7 +21,7 @@ export function useUserRolesByClient(clientId?: number) {
         setError(null);
 
         const response = await api.get<UserRolesByClientResponse>(
-          `/usuarios-funcoes/cliente/${clientId}`
+          `/usuarios-funcoes/cliente/${clientId}`,
         );
 
         if (!isMounted) return;
@@ -32,7 +32,7 @@ export function useUserRolesByClient(clientId?: number) {
         if (!isMounted) return;
 
         setError(
-          err?.response?.data?.mensagem || "Erro ao carregar cargos do cliente"
+          err?.response?.data?.mensagem || "Erro ao carregar cargos do cliente",
         );
       } finally {
         if (isMounted) setLoading(false);

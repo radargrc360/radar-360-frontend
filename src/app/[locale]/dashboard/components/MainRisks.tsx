@@ -14,7 +14,7 @@ const SCORE_ORDER: Record<string, number> = {
 export default function MainRisks() {
   const { clientData } = useGetClientData();
   const { riscos, loading } = useRiscosByCliente(
-    clientData?.mensagem.id_clientes,
+    clientData?.message.id_clientes,
   );
 
   const principaisRiscos = [...riscos]

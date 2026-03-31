@@ -46,7 +46,7 @@ export default function SetPasswordPage() {
 
     try {
       setLoading(true);
-      const response = await api.post("/clientes", combinedData);
+      const response = await api.post("/customers", combinedData);
 
       if (response.status === 201) {
         toast.success("Conta criada com sucesso!");

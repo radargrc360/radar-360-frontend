@@ -25,7 +25,7 @@ export default function ResetPasswordPage() {
     try {
       setLoading(true);
       const response = await api.post(
-        "/clientes/codigo-seguranca/pedir",
+        "/customers/codigo-seguranca/pedir",
         {
           email: data.email,
           canal: "E-mail",

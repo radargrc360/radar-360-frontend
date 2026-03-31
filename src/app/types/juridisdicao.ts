@@ -13,5 +13,5 @@ export interface GetJurisdicaoResponse {
   status: string;
   statusCode: number;
   formato: string;
-  mensagem: JurisdicaoActiva[];
+  message: JurisdicaoActiva[];
 }

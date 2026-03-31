@@ -22,7 +22,7 @@ export function useGetClientFrameworksTodos({
     setError(null);
 
     try {
-      const response = await api.get(`/clientes/${clientId}/frameworks/todos`);
+      const response = await api.get(`/customers/${clientId}/frameworks/every`);
 
       if (response.status === 200) {
         setData(response.data ?? null);

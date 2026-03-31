@@ -27,7 +27,7 @@ export default function Users() {
     users: apiUsers,
     loading,
     error,
-  } = useUsersByClient(clientData?.mensagem.id_clientes);
+  } = useUsersByClient(clientData?.message.id_clientes);
 
   function mapClientUsersToTable(apiUsers: ClientUser[]): Users[] {
     return apiUsers.map((user) => ({

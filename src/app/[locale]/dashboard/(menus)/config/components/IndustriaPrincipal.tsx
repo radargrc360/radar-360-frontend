@@ -17,10 +17,10 @@ export function IndustriaPrincipal({
   const { clientData } = useGetClientData();
 
   const { industria } = useGetClienteComFrameworks(
-    clientData?.mensagem.id_clientes,
+    clientData?.message.id_clientes,
   );
 
-  const apiIndustria = clientData?.mensagem.cliente_industria_id ?? null;
+  const apiIndustria = clientData?.message.cliente_industria_id ?? null;
 
   const currentIndustria = isEditing ? selectedIndustria : apiIndustria;
 

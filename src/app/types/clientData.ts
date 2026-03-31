@@ -1,5 +1,5 @@
 export interface ClientData {
-  mensagem: {
+  message: {
     id_clientes: number;
     nome_empresa: string;
     cliente_industria_id: number;

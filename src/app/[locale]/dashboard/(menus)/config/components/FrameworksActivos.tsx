@@ -6,7 +6,7 @@ import { OrganizationalCard } from "./OrganizationalCard";
 export function FrameworksAtivos() {
   const { clientData } = useGetClientData();
   const { frameworks } = useGetFrameworksByCliente(
-    clientData?.mensagem.id_clientes
+    clientData?.message.id_clientes,
   );
 
   return (

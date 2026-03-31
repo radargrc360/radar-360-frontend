@@ -8,7 +8,7 @@ interface ApiResponse {
   status: string;
   statusCode: number;
   formato: string;
-  mensagem: ClienteFrameworksResponse;
+  message: ClienteFrameworksResponse;
 }
 
 export function useGetClienteComFrameworks(clientId?: number) {
@@ -25,10 +25,10 @@ export function useGetClienteComFrameworks(clientId?: number) {
         setError(null);
 
         const response = await api.get<ApiResponse>(
-          `/clientes/${clientId}/frameworks/todos`
+          `/customers/${clientId}/frameworks/every`
         );
 
-        setData(response.data.mensagem);
+        setData(response.data.message);
       } catch (err: unknown) {
         if (err instanceof Error) {
           setError(err.message);

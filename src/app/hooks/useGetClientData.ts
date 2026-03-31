@@ -26,7 +26,7 @@ export default function useGetClientData() {
     }
 
     try {
-      const response = await api.get(`/clientes/hash/${hash}`);
+      const response = await api.get(`/customers/hash/${hash}`);
 
       if (response.status === 200) {
         setClientData(response.data);

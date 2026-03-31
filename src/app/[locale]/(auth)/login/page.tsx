@@ -31,13 +31,13 @@ export default function LoginPage() {
   const onSubmit: SubmitHandler<LoginFields> = async (data) => {
     try {
       setLoading(true);
-      const res = await api.post("/clientes/login", {
+      const res = await api.post("/customers/login", {
         email: data.email,
         senha: data.password,
       });
 
       if (res.status === 202) {
-        const { hash, entidade } = res.data.mensagem;
+        const { hash, entidade } = res.data.message;
 
         cookies.set("cliente_hash", hash, {
           expires: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),

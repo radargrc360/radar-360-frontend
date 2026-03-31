@@ -55,7 +55,7 @@ export default function TaxonomySetup() {
       const response = await api.post("/categoria-ao-risco/", {
         categoria_risco: selectedCategorias,
         materialidade: "Reduzido",
-        cliente_categorizado: clientData?.mensagem.id_clientes.toString(),
+        cliente_categorizado: clientData?.message.id_clientes.toString(),
       });
 
       if (response.status === 201) {

@@ -17,10 +17,10 @@ export function useGetJurisdicaoActivaComFrameworks() {
         "/jurisdicao-activa/com-frameworks",
         {
           params: { limite: 100 },
-        }
+        },
       );
 
-      setJurisdicoes(data.mensagem);
+      setJurisdicoes(data.message);
     } catch (err) {
       console.error(err);
       setError("Erro ao carregar jurisdições com frameworks");

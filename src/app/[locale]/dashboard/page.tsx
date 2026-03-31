@@ -22,7 +22,7 @@ import useGetClientData from "../../hooks/useGetClientData";
 
 export default function HomePage() {
   const { clientData } = useGetClientData();
-  const { riscos } = useRiscosByCliente(clientData?.mensagem.id_clientes);
+  const { riscos } = useRiscosByCliente(clientData?.message.id_clientes);
 
   const riscosAtivos = riscos.filter((r) =>
     ["Identificado", "Em Tratamento"].includes(r.status_riscos),
@@ -105,16 +105,16 @@ export default function HomePage() {
   ];
 
   const configured =
-    clientData?.mensagem.cliente_industria_id &&
-    clientData?.mensagem.cliente_jurisdicao_id &&
-    clientData?.mensagem.cliente_matriz_escala_id != null;
+    clientData?.message.cliente_industria_id &&
+    clientData?.message.cliente_jurisdicao_id &&
+    clientData?.message.cliente_matriz_escala_id != null;
 
   return (
     <div className="w-full min-h-svh bg-white rounded-2xl p-5 flex flex-col gap-5">
       <div className="w-full flex justify-between items-center">
         <div className="flex flex-col">
           <h1 className="text-dark text-xl font-bold">
-            Bem-vindo(a) de volta, {clientData?.mensagem.nome_empresa}!
+            Bem-vindo(a) de volta, {clientData?.message.nome_empresa}!
           </h1>
           <p className="text-gray-400 text-sm">
             Aqui está o resumo do teu ambiente de risco dos últimos 30 dias.

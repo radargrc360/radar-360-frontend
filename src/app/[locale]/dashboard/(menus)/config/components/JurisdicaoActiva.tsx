@@ -19,12 +19,12 @@ export function JurisdicoesAtivas({
   const { clientData } = useGetClientData();
 
   const { jurisdicao } = useGetClienteComFrameworks(
-    clientData?.mensagem.id_clientes,
+    clientData?.message.id_clientes,
   );
 
   console.log("jurisdicao", jurisdicao);
 
-  const apiJurisdicao = clientData?.mensagem.cliente_jurisdicao_id ?? null;
+  const apiJurisdicao = clientData?.message.cliente_jurisdicao_id ?? null;
 
   const currentJurisdicao = isEditing ? selectedJurisdicao : apiJurisdicao;
 

@@ -43,7 +43,7 @@ export default function ResetPasswordPage() {
   const onSubmit: SubmitHandler<VerificationCodeFormInputs> = async (data) => {
     try {
       setLoading(true);
-      const response = await api.post("/clientes/activar-por-codigo", {
+      const response = await api.post("/customers/activar-por-codigo", {
         codigo_confirmacao: data.verificationCode,
       });
 

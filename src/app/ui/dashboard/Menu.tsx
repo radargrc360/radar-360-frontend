@@ -49,7 +49,7 @@ export default function Menu() {
     }
 
     try {
-      const response = await api.post("/clientes/logout", { entidade });
+      const response = await api.post("/customers/logout", { entidade });
 
       if (response.status === 202) {
         cookies.remove("cliente_hash", { path: "/" });
